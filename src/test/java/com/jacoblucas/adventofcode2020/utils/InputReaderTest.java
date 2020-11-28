@@ -22,4 +22,9 @@ public class InputReaderTest {
         final List<String> lines = InputReader.readFile(TEST_PATH,"test-input.txt");
         assertThat(lines, is(ImmutableList.of("1","2","3")));
     }
+
+    @Test(expected = IOException.class)
+    public void readUsesDefaultPath() throws IOException {
+        InputReader.read("test-input.txt");
+    }
 }
