@@ -1,6 +1,7 @@
 package com.jacoblucas.adventofcode2020.day1;
 
 import com.google.common.collect.ImmutableSet;
+import com.jacoblucas.adventofcode2020.utils.Calculator;
 import com.jacoblucas.adventofcode2020.utils.InputReader;
 
 import java.io.IOException;
@@ -22,7 +23,7 @@ public class Day1 {
             throw new IllegalArgumentException("No expenses sum to expected result");
         }
         System.out.println("Sum of " + twoEntries + " = " + TOTAL);
-        final int result1 = product(twoEntries);
+        final int result1 = Calculator.product(twoEntries);
         System.out.println(result1);
 
         final Set<Integer> threeEntries = findThree(TOTAL, expenses);
@@ -30,7 +31,7 @@ public class Day1 {
             throw new IllegalArgumentException("No expenses sum to expected result");
         }
         System.out.println("Sum of " + threeEntries + " = " + TOTAL);
-        final int result2 = product(threeEntries);
+        final int result2 = Calculator.product(threeEntries);
         System.out.println(result2);
     }
 
@@ -56,9 +57,5 @@ public class Day1 {
             }
         }
         return ImmutableSet.of();
-    }
-
-    static int product(final Set<Integer> input) {
-        return input.stream().reduce(1, (a, b) -> a * b);
     }
 }
