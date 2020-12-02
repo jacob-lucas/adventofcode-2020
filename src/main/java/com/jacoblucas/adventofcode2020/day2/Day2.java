@@ -16,17 +16,11 @@ public class Day2 {
                 .map(Day2::parse)
                 .collect(Collectors.toList());
 
-        long validCount = passwords.stream()
-                .filter(pair -> pair.getFirst().isValid(pair.getSecond()))
-                .count();
+        long validCountV1 = countValid(passwords, new PasswordValidatorV1());
+        System.out.println(validCountV1);
 
-        System.out.println(validCount);
-
-        validCount = passwords.stream()
-                .filter(pair -> pair.getFirst().isValidV2(pair.getSecond()))
-                .count();
-
-        System.out.println(validCount);
+        long validCountV2 = countValid(passwords, new PasswordValidatorV2());
+        System.out.println(validCountV2);
     }
 
     // <min>-<max> <letter>: <password>
@@ -50,5 +44,11 @@ public class Day2 {
         } catch (final Exception e) {
             throw new IllegalArgumentException("Invalid password input: " + line);
         }
+    }
+
+    public static long countValid(final List<Pair<PasswordPolicy, String>> passwords, final PasswordValidator validator) {
+        return passwords.stream()
+                .filter(pair -> validator.isValid(pair.getSecond(), pair.getFirst()))
+                .count();
     }
 }
