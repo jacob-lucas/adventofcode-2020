@@ -16,8 +16,14 @@ public class Day2 {
                 .map(Day2::parse)
                 .collect(Collectors.toList());
 
-        final long validCount = passwords.stream()
+        long validCount = passwords.stream()
                 .filter(pair -> pair.getFirst().isValid(pair.getSecond()))
+                .count();
+
+        System.out.println(validCount);
+
+        validCount = passwords.stream()
+                .filter(pair -> pair.getFirst().isValidV2(pair.getSecond()))
                 .count();
 
         System.out.println(validCount);

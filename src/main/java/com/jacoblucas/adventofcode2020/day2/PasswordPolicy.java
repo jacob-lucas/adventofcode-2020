@@ -26,4 +26,10 @@ public abstract class PasswordPolicy {
         final int count = charCountMap.getOrDefault(getLetter(), 0);
         return count >= getMinimum() && count <= getMaximum();
     }
+
+    public boolean isValidV2(final String password) {
+        final int position1 = getMinimum() - 1;
+        final int position2 = getMaximum() - 1;
+        return password.charAt(position1) == getLetter() ^ password.charAt(position2) == getLetter();
+    }
 }
