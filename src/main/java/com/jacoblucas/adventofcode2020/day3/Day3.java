@@ -1,10 +1,12 @@
 package com.jacoblucas.adventofcode2020.day3;
 
 import com.google.common.collect.ImmutableList;
+import com.jacoblucas.adventofcode2020.utils.Calculator;
 import com.jacoblucas.adventofcode2020.utils.InputReader;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -19,6 +21,18 @@ public class Day3 {
         final Instruction d1 = ImmutableInstruction.of(Direction.DOWN, 1);
         final long trees = countTrees(0, 0, map, ImmutableList.of(r3, d1));
         System.out.println(trees);
+
+        final Instruction r1 = ImmutableInstruction.of(Direction.RIGHT, 1);
+        final Instruction r5 = ImmutableInstruction.of(Direction.RIGHT, 5);
+        final Instruction r7 = ImmutableInstruction.of(Direction.RIGHT, 7);
+        final Instruction d2 = ImmutableInstruction.of(Direction.DOWN, 2);
+
+        final long result = trees * Calculator.longProduct(
+                ImmutableList.of(ImmutableList.of(r1, d1), ImmutableList.of(r5, d1), ImmutableList.of(r7, d1), ImmutableList.of(r1, d2))
+                        .stream()
+                        .map(instructions -> countTrees(0, 0, map, instructions))
+                        .collect(Collectors.toList()));
+        System.out.println(result);
     }
 
     public static long countTrees(final int x, final int y, final char[][] map, final List<Instruction> slope) {
@@ -27,13 +41,6 @@ public class Day3 {
     }
 
     private static long countTrees(final int x, final int y, final char[][] map, final List<Instruction> slope, final int[][] count) {
-        if (y >= map.length) {
-            return Stream.of(count)
-                    .map(IntStream::of)
-                    .mapToInt(IntStream::sum)
-                    .sum();
-        }
-
         int newX = x;
         int newY = y;
         for (final Instruction instruction : slope) {
@@ -42,23 +49,14 @@ public class Day3 {
 
             if (direction == Direction.LEFT || direction == Direction.RIGHT) {
                 newX += (direction.getDelta() * amount);
-//                for (int i = x; i <= newX; i++) {
-//                    final int pos = i % map[0].length;
-//                    if (map[newY][pos] == TREE) {
-//                        count[newY][pos] = 1;
-//                    }
-//                }
             } else {
-//                final int pos = newX % map[0].length;
                 newY += (direction.getDelta() * amount);
                 if (newY >= map.length) {
-                    return countTrees(newX, newY, map, slope, count);
+                    return Stream.of(count)
+                            .map(IntStream::of)
+                            .mapToInt(IntStream::sum)
+                            .sum();
                 }
-//                for (int i = y; i <= newY; i++) {
-//                    if (map[i][pos] == TREE) {
-//                        count[i][pos] = 1;
-//                    }
-//                }
             }
         }
 
