@@ -10,14 +10,26 @@ import static org.junit.Assert.assertThat;
 
 public class CalculatorTest {
     @Test
-    public void productMultipliesAll() {
+    public void intProductMultipliesAll() {
         final Set<Integer> input = ImmutableSet.of(979, 366, 675);
-        assertThat(Calculator.product(input), is(241861950));
+        assertThat(Calculator.intProduct(input), is(241861950));
     }
 
     @Test
-    public void productOfEmptySet() {
+    public void intProductOfEmptySet() {
         final Set<Integer> input = ImmutableSet.of();
-        assertThat(Calculator.product(input), is(0));
+        assertThat(Calculator.intProduct(input), is(0));
+    }
+
+    @Test
+    public void longProductMultipliesAll() {
+        final Set<Long> input = ImmutableSet.of(979L, 366L, 675L);
+        assertThat(Calculator.longProduct(input), is(241861950L));
+    }
+
+    @Test
+    public void longProductOfEmptySet() {
+        final Set<Long> input = ImmutableSet.of();
+        assertThat(Calculator.longProduct(input), is(0L));
     }
 }

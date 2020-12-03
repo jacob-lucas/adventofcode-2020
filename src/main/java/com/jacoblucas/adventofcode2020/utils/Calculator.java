@@ -5,7 +5,7 @@ import java.util.Collection;
 public final class Calculator {
     private Calculator() {}
 
-    public static int product(final Collection<Integer> input) {
+    public static int intProduct(final Collection<Integer> input) {
         return input.isEmpty() ? 0 : input.stream().reduce(1, (a, b) -> a * b);
     }
 

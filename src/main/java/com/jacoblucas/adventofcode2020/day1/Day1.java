@@ -23,7 +23,7 @@ public class Day1 {
             throw new IllegalArgumentException("No expenses sum to expected result");
         }
         System.out.println("Sum of " + twoEntries + " = " + TOTAL);
-        final int result1 = Calculator.product(twoEntries);
+        final int result1 = Calculator.intProduct(twoEntries);
         System.out.println(result1);
 
         final Set<Integer> threeEntries = findThree(TOTAL, expenses);
@@ -31,7 +31,7 @@ public class Day1 {
             throw new IllegalArgumentException("No expenses sum to expected result");
         }
         System.out.println("Sum of " + threeEntries + " = " + TOTAL);
-        final int result2 = Calculator.product(threeEntries);
+        final int result2 = Calculator.intProduct(threeEntries);
         System.out.println(result2);
     }
 
