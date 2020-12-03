@@ -1,6 +1,8 @@
 package com.jacoblucas.adventofcode2020.day3;
 
 import com.google.common.collect.ImmutableList;
+import com.jacoblucas.adventofcode2020.utils.ImmutablePair;
+import com.jacoblucas.adventofcode2020.utils.Pair;
 import org.junit.Test;
 
 import java.util.List;
@@ -43,9 +45,9 @@ public class Day3Test {
                 ".#..#...#.#");
 
         final char[][] map = Day3.parse(lines);
-        final Instruction r3 = ImmutableInstruction.of(Direction.RIGHT, 3);
-        final Instruction d1 = ImmutableInstruction.of(Direction.DOWN, 1);
-        final List<Instruction> slope = ImmutableList.of(r3, d1);
+        final Pair<Direction, Integer> r3 = ImmutablePair.of(Direction.RIGHT, 3);
+        final Pair<Direction, Integer> d1 = ImmutablePair.of(Direction.DOWN, 1);
+        final List<Pair<Direction, Integer>> slope = ImmutableList.of(r3, d1);
 
         final long trees = Day3.countTrees(0, 0, map, slope);
 

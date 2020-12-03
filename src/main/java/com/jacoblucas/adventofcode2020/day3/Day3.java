@@ -2,7 +2,9 @@ package com.jacoblucas.adventofcode2020.day3;
 
 import com.google.common.collect.ImmutableList;
 import com.jacoblucas.adventofcode2020.utils.Calculator;
+import com.jacoblucas.adventofcode2020.utils.ImmutablePair;
 import com.jacoblucas.adventofcode2020.utils.InputReader;
+import com.jacoblucas.adventofcode2020.utils.Pair;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,15 +19,15 @@ public class Day3 {
         final List<String> lines = InputReader.read("day3-input.txt");
         final char[][] map = parse(lines);
 
-        final Instruction r3 = ImmutableInstruction.of(Direction.RIGHT, 3);
-        final Instruction d1 = ImmutableInstruction.of(Direction.DOWN, 1);
+        final Pair<Direction, Integer> r3 = ImmutablePair.of(Direction.RIGHT, 3);
+        final Pair<Direction, Integer> d1 = ImmutablePair.of(Direction.DOWN, 1);
         final long trees = countTrees(0, 0, map, ImmutableList.of(r3, d1));
         System.out.println(trees);
 
-        final Instruction r1 = ImmutableInstruction.of(Direction.RIGHT, 1);
-        final Instruction r5 = ImmutableInstruction.of(Direction.RIGHT, 5);
-        final Instruction r7 = ImmutableInstruction.of(Direction.RIGHT, 7);
-        final Instruction d2 = ImmutableInstruction.of(Direction.DOWN, 2);
+        final Pair<Direction, Integer> r1 = ImmutablePair.of(Direction.RIGHT, 1);
+        final Pair<Direction, Integer> r5 = ImmutablePair.of(Direction.RIGHT, 5);
+        final Pair<Direction, Integer> r7 = ImmutablePair.of(Direction.RIGHT, 7);
+        final Pair<Direction, Integer> d2 = ImmutablePair.of(Direction.DOWN, 2);
 
         final long result = trees * Calculator.longProduct(
                 ImmutableList.of(ImmutableList.of(r1, d1), ImmutableList.of(r5, d1), ImmutableList.of(r7, d1), ImmutableList.of(r1, d2))
@@ -35,17 +37,17 @@ public class Day3 {
         System.out.println(result);
     }
 
-    public static long countTrees(final int x, final int y, final char[][] map, final List<Instruction> slope) {
+    public static long countTrees(final int x, final int y, final char[][] map, final List<Pair<Direction, Integer>> slope) {
         int[][] count = new int[map.length][map[0].length];
         return countTrees(x, y, map, slope, count);
     }
 
-    private static long countTrees(final int x, final int y, final char[][] map, final List<Instruction> slope, final int[][] count) {
+    private static long countTrees(final int x, final int y, final char[][] map, final List<Pair<Direction, Integer>> slope, final int[][] count) {
         int newX = x;
         int newY = y;
-        for (final Instruction instruction : slope) {
-            final Direction direction = instruction.getDirection();
-            final int amount = instruction.getAmount();
+        for (final Pair<Direction, Integer> instruction : slope) {
+            final Direction direction = instruction.getFirst();
+            final int amount = instruction.getSecond();
 
             if (direction == Direction.LEFT || direction == Direction.RIGHT) {
                 newX += (direction.getDelta() * amount);
