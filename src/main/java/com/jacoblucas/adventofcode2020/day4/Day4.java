@@ -5,6 +5,7 @@ import com.jacoblucas.adventofcode2020.utils.InputReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Day4 {
     public static void main(String[] args) throws IOException {
@@ -13,6 +14,20 @@ public class Day4 {
         final List<Passport> validPassports = parse(lines);
 
         System.out.println(validPassports.size());
+
+        final List<Passport> validValuePassports = validPassports.stream()
+                .filter(p -> {
+                    try {
+                        p.validate();
+                        return true;
+                    } catch (final Exception e) {
+                        System.out.println(p + " :: " + e.getMessage());
+                        return false;
+                    }
+                })
+                .collect(Collectors.toList());
+
+        System.out.println(validValuePassports.size());
     }
 
     public static List<Passport> parse(final List<String> input) {
