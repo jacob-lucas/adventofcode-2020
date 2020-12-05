@@ -3,7 +3,6 @@ package com.jacoblucas.adventofcode2020.day5;
 import com.jacoblucas.adventofcode2020.utils.InputReader;
 
 import java.io.IOException;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,12 +19,24 @@ public class Day5 {
                 .columns(new int[8])
                 .build();
 
-        final int highestSeatId = boardingPasses.stream()
+        final List<Integer> seatIds = boardingPasses.stream()
                 .map(plane::findSeat)
                 .map(p -> plane.getSeatId(p.getFirst(), p.getSecond()))
-                .max(Comparator.naturalOrder())
-                .orElse(-1);
+                .sorted()
+                .collect(Collectors.toList());
+
+        final int highestSeatId = seatIds.get(seatIds.size() - 1);
 
         System.out.println(highestSeatId);
+
+        for (int i=1; i<seatIds.size(); i++) {
+            final int id1 = seatIds.get(i-1);
+            final int id2 = seatIds.get(i);
+
+            if (id2 - id1 > 1) {
+                System.out.println(id2 - 1);
+                break;
+            }
+        }
     }
 }
