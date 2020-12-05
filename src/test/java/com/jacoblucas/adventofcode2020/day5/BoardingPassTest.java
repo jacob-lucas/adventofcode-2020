@@ -12,6 +12,7 @@ public class BoardingPassTest {
                 .seatSpec("FBF")
                 .build();
     }
+
     @Test(expected = IllegalArgumentException.class)
     public void testInvalidLetters() {
         ImmutableBoardingPass.builder()
