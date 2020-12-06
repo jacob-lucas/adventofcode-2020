@@ -25,9 +25,9 @@ public class Day6 {
         return String.join("", uniques);
     }
 
-    public static String commonQuestions(final List<String> groups) {
+    public static String commonQuestions(final List<String> group) {
         final String allQuestions = "abcdefghijklmnopqrstuvwxyz";
-        final Set<String> commons = groups.stream()
+        final Set<String> commons = group.stream()
                 .map(Day6::toSet)
                 .reduce(toSet(allQuestions), Sets::intersection);
 
