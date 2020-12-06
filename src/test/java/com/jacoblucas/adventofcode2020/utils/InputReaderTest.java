@@ -27,4 +27,15 @@ public class InputReaderTest {
     public void readUsesDefaultPath() throws IOException {
         InputReader.read("test-input.txt");
     }
+
+    @Test
+    public void testReadGroups() throws IOException {
+        final List<List<String>> groups = InputReader.readGroups(TEST_PATH, "grouped-input.txt");
+
+        assertThat(groups, is(ImmutableList.of(
+                ImmutableList.of("1", "2", "3"),
+                ImmutableList.of("4", "5"),
+                ImmutableList.of("6"),
+                ImmutableList.of("7", "8", "9", "0"))));
+    }
 }

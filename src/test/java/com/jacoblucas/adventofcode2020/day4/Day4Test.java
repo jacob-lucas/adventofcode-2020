@@ -1,8 +1,8 @@
 package com.jacoblucas.adventofcode2020.day4;
 
+import com.google.common.collect.ImmutableList;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -12,21 +12,21 @@ public class Day4Test {
 
     @Test
     public void testParse() {
-        final List<String> input = new ArrayList<>();
-        input.add("ecl:gry pid:860033327 eyr:2020 hcl:#fffffd");
-        input.add("byr:1937 iyr:2017 cid:147 hgt:183cm");
-        input.add("");
-        input.add("iyr:2013 ecl:amb cid:350 eyr:2023 pid:028048884");
-        input.add("hcl:#cfa07d byr:1929");
-        input.add("");
-        input.add("hcl:#ae17e1 iyr:2013");
-        input.add("eyr:2024");
-        input.add("ecl:brn pid:760753108 byr:1931");
-        input.add("hgt:179cm");
-        input.add("");
-        input.add("hcl:#cfa07d eyr:2025 pid:166559648");
-        input.add("iyr:2011 ecl:brn hgt:59in");
-        input.add("");
+        final List<List<String>> input = ImmutableList.of(
+                ImmutableList.of(
+                        "ecl:gry pid:860033327 eyr:2020 hcl:#fffffd",
+                        "byr:1937 iyr:2017 cid:147 hgt:183cm"),
+                ImmutableList.of(
+                        "iyr:2013 ecl:amb cid:350 eyr:2023 pid:028048884",
+                        "hcl:#cfa07d byr:1929"),
+                ImmutableList.of(
+                        "hcl:#ae17e1 iyr:2013",
+                        "eyr:2024",
+                        "ecl:brn pid:760753108 byr:1931",
+                        "hgt:179cm"),
+                ImmutableList.of(
+                        "hcl:#cfa07d eyr:2025 pid:166559648",
+                        "iyr:2011 ecl:brn hgt:59in"));
 
         final List<Passport> passports = Day4.parse(input);
         assertThat(passports.size(), is(2));
