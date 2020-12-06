@@ -59,19 +59,60 @@ public class Day6Test {
     }
 
     @Test
-    public void testGetQuestionCountSumEmptyList() {
-        final List<List<String>> groups = ImmutableList.of();
-        assertThat(Day6.getQuestionCountSum(groups), is(0));
+    public void example2Common() {
+        final List<String> questions = ImmutableList.of("abc");
+        assertThat(Day6.commonQuestions(questions), is("abc"));
     }
 
     @Test
-    public void testGetQuestionCountSum() {
+    public void example3Common() {
+        final List<String> questions = ImmutableList.of("a", "b", "c");
+        assertThat(Day6.commonQuestions(questions), is(""));
+    }
+
+    @Test
+    public void example4Common() {
+        final List<String> questions = ImmutableList.of("ab", "ac");
+        assertThat(Day6.commonQuestions(questions), is("a"));
+    }
+
+    @Test
+    public void example5Common() {
+        final List<String> questions = ImmutableList.of("a", "a", "a", "a");
+        assertThat(Day6.commonQuestions(questions), is("a"));
+    }
+
+    @Test
+    public void example6Common() {
+        final List<String> questions = ImmutableList.of("b");
+        assertThat(Day6.commonQuestions(questions), is("b"));
+    }
+
+    @Test
+    public void testGetQuestionCountSumEmptyList() {
+        final List<List<String>> groups = ImmutableList.of();
+        assertThat(Day6.getQuestionCountSum(groups, Day6::uniqueQuestions), is(0));
+    }
+
+    @Test
+    public void testGetUniqueQuestionCountSum() {
         final List<List<String>> groups = ImmutableList.of(
                 ImmutableList.of("abc"),
                 ImmutableList.of("a", "b", "c"),
                 ImmutableList.of("ab", "ac"),
                 ImmutableList.of("a", "a", "a", "a"),
                 ImmutableList.of("b"));
-        assertThat(Day6.getQuestionCountSum(groups), is(11));
+        assertThat(Day6.getQuestionCountSum(groups, Day6::uniqueQuestions), is(11));
+    }
+
+    @Test
+    public void testGetCommonQuestionCountSum() {
+        final List<List<String>> groups = ImmutableList.of(
+                ImmutableList.of("abc"),
+                ImmutableList.of("a", "b", "c"),
+                ImmutableList.of("ab", "ac"),
+                ImmutableList.of("a", "a", "a", "a"),
+                ImmutableList.of("b"));
+        assertThat(Day6.getQuestionCountSum(groups, Day6::commonQuestions), is(6));
     }
 }
