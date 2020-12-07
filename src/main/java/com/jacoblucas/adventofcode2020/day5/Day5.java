@@ -19,15 +19,8 @@ public class Day5 {
                 .columns(new int[8])
                 .build();
 
-        final List<Integer> seatIds = boardingPasses.stream()
-                .map(plane::findSeat)
-                .map(p -> plane.getSeatId(p.getFirst(), p.getSecond()))
-                .sorted()
-                .collect(Collectors.toList());
-
-        final int highestSeatId = seatIds.get(seatIds.size() - 1);
-
-        System.out.println(highestSeatId);
+        final List<Integer> seatIds = toSeatIds(boardingPasses, plane);
+        System.out.println(seatIds.get(seatIds.size() - 1));
 
         for (int i=1; i<seatIds.size(); i++) {
             final int id1 = seatIds.get(i-1);
@@ -38,5 +31,13 @@ public class Day5 {
                 break;
             }
         }
+    }
+
+    public static List<Integer> toSeatIds(final List<BoardingPass> boardingPasses, final Plane plane) {
+        return boardingPasses.stream()
+                .map(plane::findSeat)
+                .map(p -> plane.getSeatId(p.getFirst(), p.getSecond()))
+                .sorted()
+                .collect(Collectors.toList());
     }
 }
