@@ -12,13 +12,11 @@ public class Day4 {
         final List<List<String>> groups = InputReader.readGroups("day4-input.txt");
 
         final List<Passport> validPassports = parse(groups);
-
         System.out.println(validPassports.size());
 
         final List<Passport> validValuePassports = validPassports.stream()
                 .filter(p -> Try.run(p::validate).isSuccess())
                 .collect(Collectors.toList());
-
         System.out.println(validValuePassports.size());
     }
 

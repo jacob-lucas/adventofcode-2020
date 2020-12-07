@@ -65,4 +65,47 @@ public class PassportTest {
 
         Passport.parse(input);
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void invalidBirthYear() {
+        final Passport passport = Passport.parse(ImmutableList.of(
+                "eyr:1972 cid:100",
+                "hcl:#18171d ecl:amb hgt:170 pid:186cm iyr:2018 byr:1926"));
+        passport.validate();
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void invalidExpirationYear() {
+        final Passport passport = Passport.parse(ImmutableList.of(
+                "iyr:2019",
+                "hcl:#602927 eyr:1967 hgt:170cm",
+                "ecl:grn pid:012533040 byr:1946"));
+        passport.validate();
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void invalidHairColour() {
+        final Passport passport = Passport.parse(ImmutableList.of(
+                "hcl:dab227 iyr:2012",
+                "ecl:brn hgt:182cm pid:021572410 eyr:2020 byr:1992 cid:277"));
+        passport.validate();
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void invalidHeight() {
+        final Passport passport = Passport.parse(ImmutableList.of(
+                "hgt:49in ecl:blu",
+                "eyr:2030 hcl:#74454a iyr:2020",
+                "pid:3556412378 byr:2001"));
+        passport.validate();
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void invalidPassportId() {
+        final Passport passport = Passport.parse(ImmutableList.of(
+                "hgt:69in ecl:blu",
+                "eyr:2030 hcl:#74454a iyr:2020",
+                "pid:abc byr:2001"));
+        passport.validate();
+    }
 }
