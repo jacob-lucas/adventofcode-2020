@@ -13,33 +13,58 @@ import static org.hamcrest.Matchers.empty;
 import static org.junit.Assert.assertThat;
 
 public class Day7Test {
-    private List<Rule> rules;
+    private static final String TEST_PATH = "src/test/resources/";
+
+    private List<Rule> rulesP1;
+    private List<Rule> rulesP2;
 
     @Before
     public void setUp() throws IOException {
-        final List<String> input = InputReader.readFile("src/test/resources/", "day7-test-input.txt");
-        rules = Day7.parseInput(input);
+        final List<String> inputP1 = InputReader.readFile(TEST_PATH, "day7-test-input-p1.txt");
+        rulesP1 = Day7.parseInput(inputP1);
+        final List<String> inputP2 = InputReader.readFile(TEST_PATH, "day7-test-input-p2.txt");
+        rulesP2 = Day7.parseInput(inputP2);
     }
 
     @Test
-    public void testBagsContainingColoursUnknownColour() {
-        assertThat(Day7.bagsContainingBagColour(rules, "unknown colour"), is(empty()));
+    public void bagsContainingBagColoursUnknownColour() {
+        assertThat(Day7.bagsContainingBagColour(rulesP1, "unknown colour"), is(empty()));
     }
 
     @Test
-    public void example1() {
-        assertThat(Day7.bagsContainingBagColour(rules, "shiny gold"),
+    public void bagsContainingBagColourExample1() {
+        assertThat(Day7.bagsContainingBagColour(rulesP1, "shiny gold"),
                 containsInAnyOrder("bright white", "muted yellow", "dark orange", "light red"));
     }
 
     @Test
-    public void example2() {
-        assertThat(Day7.bagsContainingBagColour(rules, "dark olive"),
+    public void bagsContainingBagColourExample2() {
+        assertThat(Day7.bagsContainingBagColour(rulesP1, "dark olive"),
                 containsInAnyOrder("shiny gold", "bright white", "muted yellow", "dark orange", "light red"));
     }
 
     @Test
-    public void example3() {
-        assertThat(Day7.bagsContainingBagColour(rules, "dark orange"), is(empty()));
+    public void bagsContainingBagColourExample3() {
+        assertThat(Day7.bagsContainingBagColour(rulesP1, "dark orange"), is(empty()));
+    }
+
+    @Test
+    public void bagsContainedByBagColourUnknownColour() {
+        assertThat(Day7.bagsContainedByBagColour(rulesP2, "unknown colour"), is(0));
+    }
+
+    @Test
+    public void bagsContainedByBagColourNoContents() {
+        assertThat(Day7.bagsContainedByBagColour(rulesP2, "dark violet"), is(0));
+    }
+
+    @Test
+    public void bagsContainedByBagColourPart1Rules() {
+        assertThat(Day7.bagsContainedByBagColour(rulesP1, "shiny gold"), is(32));
+    }
+
+    @Test
+    public void bagsContainedByBagColourPart2Rules() {
+        assertThat(Day7.bagsContainedByBagColour(rulesP2, "shiny gold"), is(126));
     }
 }
