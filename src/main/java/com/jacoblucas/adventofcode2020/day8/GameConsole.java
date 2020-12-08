@@ -1,5 +1,8 @@
 package com.jacoblucas.adventofcode2020.day8;
 
+import com.jacoblucas.adventofcode2020.utils.ImmutablePair;
+import com.jacoblucas.adventofcode2020.utils.Pair;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,7 +20,7 @@ public class GameConsole {
         accumulator = 0;
     }
 
-    public int boot() {
+    public Pair<Integer, Boolean> boot() {
         final Set<Integer> loopDetector = new HashSet<>();
         int pos = 0;
         boolean booted = false;
@@ -37,12 +40,12 @@ public class GameConsole {
                 pos += instruction.getArgument();
             }
 
-            System.out.println("[pos=" + n + "] " + instruction + " => accumulator=" + accumulator);
+            // System.out.println("[pos=" + n + "] " + instruction + " => accumulator=" + accumulator);
             if (pos >= instructions.length) {
                 booted = true;
             }
         }
 
-        return accumulator;
+        return ImmutablePair.of(accumulator, booted);
     }
 }
