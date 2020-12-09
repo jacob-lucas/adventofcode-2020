@@ -1,5 +1,6 @@
 package com.jacoblucas.adventofcode2020.day9;
 
+import com.google.common.collect.ImmutableSet;
 import com.jacoblucas.adventofcode2020.day1.Day1;
 
 import java.util.HashSet;
@@ -41,5 +42,20 @@ public class XMAS {
         }
 
         return -1;
+    }
+
+    public Set<Long> findWeakness(final long invalidNumber, final List<Long> input, final int minSetSize) {
+        for (int i = 0; i < input.size(); i++) {
+            long sum = 0;
+            for (int j = i; j < input.size(); j++) {
+                sum += input.get(j);
+                if (sum > invalidNumber) {
+                    break;
+                } else if (sum == invalidNumber && (j-i) >= minSetSize) {
+                    return new HashSet<>(input.subList(i, j+1));
+                }
+            }
+        }
+        return ImmutableSet.of();
     }
 }
