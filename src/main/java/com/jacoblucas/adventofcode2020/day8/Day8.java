@@ -20,16 +20,19 @@ public class Day8 {
         final Pair<Integer, Boolean> output1 = gameConsole.boot();
         System.out.println(output1.getFirst());
 
-        // NOP => JMP
-        Pair<Integer, Boolean> flip = flip(lines, NOP, JMP);
-        if (flip != null) {
-            System.out.println(flip.getFirst());
-        }
-
-        // JMP => NOP
-        flip = flip(lines, JMP, NOP);
-        if (flip != null) {
-            System.out.println(flip.getFirst());
+        for (int i=0; i<instructions.length; i++) {
+            final Instruction instruction = instructions[i];
+            final Operation operation = instruction.getOperation();
+            if ((operation == JMP || operation == NOP) && instruction.getArgument() < 0) {
+                // going backwards, flip and check to see if we can boot successfully
+                final Instruction[] flipped = toInstructions(lines);
+                flipped[i] = ImmutableInstruction.copyOf(instruction).withOperation(operation == JMP ? NOP : JMP);
+                final Pair<Integer, Boolean> output = new GameConsole(flipped).boot();
+                if (output.getSecond()) {
+                    System.out.println(output.getFirst());
+                    break;
+                }
+            }
         }
     }
 
@@ -40,22 +43,5 @@ public class Day8 {
                 .map(Try::get)
                 .collect(Collectors.toList())
                 .toArray(new Instruction[]{});
-    }
-
-    private static Pair<Integer, Boolean> flip(final List<String> lines, final Operation from, final Operation to) {
-        final Instruction[] instructions = toInstructions(lines);
-        for (int i=0; i<instructions.length; i++) {
-            final Instruction instruction = instructions[i];
-            if (instruction.getOperation() == from) {
-                // flip and test
-                final Instruction[] flipped = toInstructions(lines);
-                flipped[i] = ImmutableInstruction.copyOf(instruction).withOperation(to);
-                final Pair<Integer, Boolean> output = new GameConsole(flipped).boot();
-                if (output.getSecond()) {
-                    return output;
-                }
-            }
-        }
-        return null;
     }
 }
