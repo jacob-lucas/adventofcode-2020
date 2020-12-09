@@ -10,31 +10,30 @@ import static org.hamcrest.Matchers.empty;
 import static org.junit.Assert.assertThat;
 
 public class Day1Test {
+    private static final Set<Long> INPUT = ImmutableSet.of(1721L, 979L, 366L, 299L, 675L, 1456L);
     @Test
     public void findTwoWithResult() {
-        final Set<Integer> input = ImmutableSet.of(1721, 979, 366, 299, 675, 1456);
-        final Set<Integer> pair = Day1.findTwo(2020, input);
-        assertThat(pair, is(ImmutableSet.of(1721, 299)));
+        final Set<Long> pair = Day1.findTwo(2020, INPUT);
+        assertThat(pair, is(ImmutableSet.of(1721L, 299L)));
     }
 
     @Test
     public void findTwoWithoutResult() {
-        final Set<Integer> input = ImmutableSet.of(1721, 979, 366, 2999, 675, 1456);
-        final Set<Integer> pair = Day1.findTwo(2020, input);
+        final Set<Long> input = ImmutableSet.of(1721L, 979L, 366L, 2999L, 675L, 1456L);
+        final Set<Long> pair = Day1.findTwo(2020, input);
         assertThat(pair, is(empty()));
     }
 
     @Test
     public void findThreeWithResult() {
-        final Set<Integer> input = ImmutableSet.of(1721, 979, 366, 299, 675, 1456);
-        final Set<Integer> result = Day1.findThree(2020, input);
-        assertThat(result, is(ImmutableSet.of(979, 366, 675)));
+        final Set<Long> result = Day1.findThree(2020, INPUT);
+        assertThat(result, is(ImmutableSet.of(979L, 366L, 675L)));
     }
 
     @Test
     public void findThreeWithoutResult() {
-        final Set<Integer> input = ImmutableSet.of(1721, 9799, 366, 2999, 675, 1456);
-        final Set<Integer> result = Day1.findThree(2020, input);
+        final Set<Long> input = ImmutableSet.of(1721L, 9799L, 366L, 2999L, 675L, 1456L);
+        final Set<Long> result = Day1.findThree(2020, input);
         assertThat(result, is(empty()));
     }
 }

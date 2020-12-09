@@ -13,31 +13,31 @@ public class Day1 {
     public static final int TOTAL = 2020;
 
     public static void main(String[] args) throws IOException {
-        final Set<Integer> expenses = InputReader.read("day1-input.txt").stream()
-                .mapToInt(Integer::parseInt)
+        final Set<Long> expenses = InputReader.read("day1-input.txt").stream()
+                .mapToLong(Long::parseLong)
                 .boxed()
                 .collect(Collectors.toSet());
 
-        final Set<Integer> twoEntries = findTwo(TOTAL, expenses);
+        final Set<Long> twoEntries = findTwo(TOTAL, expenses);
         if (twoEntries.size() != 2) {
             throw new IllegalArgumentException("No expenses sum to expected result");
         }
         System.out.println("Sum of " + twoEntries + " = " + TOTAL);
-        final int result1 = Calculator.intProduct(twoEntries);
+        final long result1 = Calculator.longProduct(twoEntries);
         System.out.println(result1);
 
-        final Set<Integer> threeEntries = findThree(TOTAL, expenses);
+        final Set<Long> threeEntries = findThree(TOTAL, expenses);
         if (threeEntries.size() != 3) {
             throw new IllegalArgumentException("No expenses sum to expected result");
         }
         System.out.println("Sum of " + threeEntries + " = " + TOTAL);
-        final int result2 = Calculator.intProduct(threeEntries);
+        final long result2 = Calculator.longProduct(threeEntries);
         System.out.println(result2);
     }
 
-    static Set<Integer> findTwo(final int result, final Set<Integer> input) {
-        for (int i : input) {
-            int diff = result - i;
+    public static Set<Long> findTwo(final long result, final Set<Long> input) {
+        for (long i : input) {
+            long diff = result - i;
             if (input.contains(diff)) {
                 return ImmutableSet.of(i, diff);
             }
@@ -45,13 +45,13 @@ public class Day1 {
         return ImmutableSet.of();
     }
 
-    static Set<Integer> findThree(final int result, final Set<Integer> input) {
-        for (int i : input) {
-            int diff = result - i;
-            final Set<Integer> subInput = input.stream()
+    static Set<Long> findThree(final long result, final Set<Long> input) {
+        for (long i : input) {
+            long diff = result - i;
+            final Set<Long> subInput = input.stream()
                     .filter(n -> n != diff)
                     .collect(Collectors.toSet());
-            final Set<Integer> others = findTwo(diff, subInput);
+            final Set<Long> others = findTwo(diff, subInput);
             if (!others.isEmpty()) {
                 return Stream.concat(ImmutableSet.of(i).stream(), others.stream()).collect(Collectors.toSet());
             }
