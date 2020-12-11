@@ -75,4 +75,44 @@ public class SeatLayoutTest {
 
         assertThat(iteration, is(expected));
     }
+
+    @Test
+    public void testCountVisibleExample1() {
+        final List<String> input = ImmutableList.of(
+                ".......#.",
+                "...#.....",
+                ".#.......",
+                ".........",
+                "..#L....#",
+                "....#....",
+                ".........",
+                "#........",
+                "...#.....");
+        final SeatLayout seatLayout = SeatLayout.parse(input);
+        assertThat(seatLayout.countVisible(3, 4, OCCUPIED), is(8));
+    }
+
+    @Test
+    public void testCountVisibleExample2() {
+        final List<String> input = ImmutableList.of(
+                ".............",
+                ".L.L.#.#.#.#.",
+                ".............");
+        final SeatLayout seatLayout = SeatLayout.parse(input);
+        assertThat(seatLayout.countVisible(1, 1, OCCUPIED), is(0));
+    }
+
+    @Test
+    public void testCountVisibleExample3() {
+        final List<String> input = ImmutableList.of(
+                ".##.##.",
+                "#.#.#.#",
+                "##...##",
+                "...L...",
+                "##...##",
+                "#.#.#.#",
+                ".##.##.");
+        final SeatLayout seatLayout = SeatLayout.parse(input);
+        assertThat(seatLayout.countVisible(3, 3, OCCUPIED), is(0));
+    }
 }

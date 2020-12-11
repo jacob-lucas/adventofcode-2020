@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.jacoblucas.adventofcode2020.day11.Position.EMPTY;
+import static com.jacoblucas.adventofcode2020.day11.Position.FLOOR;
 import static com.jacoblucas.adventofcode2020.day11.Position.OCCUPIED;
 
 public class SeatLayout {
@@ -35,12 +36,35 @@ public class SeatLayout {
         int count = 0;
         for (int j=-1; j<=1; j++) {
             for (int i=-1; i<=1; i++) {
-                if (y+j < 0 || y+j >= grid.length || x+i < 0 || x+i >= grid[0].length || (j == 0 && i == 0)) {
+                if (offGrid(x+i, y+j) || (j == 0 && i == 0)) {
                     continue;
                 }
 
                 final Position position = grid[y+j][x+i];
                 if (position == value) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    public int countVisible(final int x, final int y, final Position position) {
+        int count = 0;
+        for (int j=-1; j<=1; j++) {
+            for (int i=-1; i<=1; i++) {
+                int x1 = x + i;
+                int y1 = y + j;
+                if (offGrid(x1, y1) || (j == 0 && i == 0)) {
+                    continue;
+                }
+
+                while (!offGrid(x1, y1) && grid[y1][x1] == FLOOR) {
+                    y1 += j;
+                    x1 += i;
+                }
+
+                if (!offGrid(x1, y1) && grid[y1][x1] == position) {
                     count++;
                 }
             }
@@ -69,5 +93,32 @@ public class SeatLayout {
 
         grid = next;
         return !equal;
+    }
+
+    // Returns true if the grid was updated, false otherwise
+    public boolean iterateV2() {
+        final Position[][] next = new Position[grid.length][grid[0].length];
+        for (int j=0; j<grid.length; j++) {
+            for (int i=0; i<grid[0].length; i++) {
+                final Position curr = grid[j][i];
+                if (curr == EMPTY && countVisible(i, j, OCCUPIED) == 0) {
+                    next[j][i] = OCCUPIED;
+                } else if (curr == OCCUPIED && countVisible(i, j, OCCUPIED) >= 5) {
+                    next[j][i] = EMPTY;
+                } else {
+                    next[j][i] = curr;
+                }
+            }
+        }
+
+        // Did the iteration not change anything?
+        boolean equal = Arrays.deepEquals(grid, next);
+
+        grid = next;
+        return !equal;
+    }
+
+    private boolean offGrid(final int x, final int y) {
+        return y < 0 || y >= grid.length || x < 0 || x >= grid[0].length;
     }
 }
