@@ -42,14 +42,14 @@ public class Day10Test {
 
     @Test
     public void count1() {
-        final List<JoltageAdapter> chain = Day10.chain(adapters);
-        final int n = Day10.countDifferences(chain, 1);
+        final List<JoltageAdapter> chain = Day10.outletToDevice(Day10.chain(adapters));
+        final int n = Day10.countDifferences( chain, 1);
         assertThat(n, is(7));
     }
 
     @Test
     public void count3() {
-        final List<JoltageAdapter> chain = Day10.chain(adapters);
+        final List<JoltageAdapter> chain = Day10.outletToDevice(Day10.chain(adapters));
         final int n = Day10.countDifferences(chain, 3);
         assertThat(n, is(5));
     }
@@ -57,7 +57,7 @@ public class Day10Test {
     @Test
     public void count1Example2() throws IOException {
         adapters = Day10.parse(InputReader.readFile("src/test/resources/", "day10-test-input-p1-2.txt"));
-        final List<JoltageAdapter> chain = Day10.chain(adapters);
+        final List<JoltageAdapter> chain = Day10.outletToDevice(Day10.chain(adapters));
         final int n = Day10.countDifferences(chain, 1);
         assertThat(n, is(22));
     }
@@ -65,8 +65,23 @@ public class Day10Test {
     @Test
     public void count3Example2() throws IOException {
         adapters = Day10.parse(InputReader.readFile("src/test/resources/", "day10-test-input-p1-2.txt"));
-        final List<JoltageAdapter> chain = Day10.chain(adapters);
+        final List<JoltageAdapter> chain = Day10.outletToDevice(Day10.chain(adapters));
         final int n = Day10.countDifferences(chain, 3);
         assertThat(n, is(10));
+    }
+
+    @Test
+    public void countCombinationsExample1() {
+        final List<JoltageAdapter> chain = Day10.chain(adapters);
+        final long combinations = Day10.countCombinations(chain);
+        assertThat(combinations, is(8L));
+    }
+
+    @Test
+    public void countCombinationsExample2() throws IOException {
+        adapters = Day10.parse(InputReader.readFile("src/test/resources/", "day10-test-input-p1-2.txt"));
+        final List<JoltageAdapter> chain = Day10.chain(adapters);
+        final long combinations = Day10.countCombinations(chain);
+        assertThat(combinations, is(19208L));
     }
 }
