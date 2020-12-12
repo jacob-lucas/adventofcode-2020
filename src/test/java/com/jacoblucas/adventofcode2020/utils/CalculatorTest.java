@@ -32,4 +32,14 @@ public class CalculatorTest {
         final Set<Long> input = ImmutableSet.of();
         assertThat(Calculator.longProduct(input), is(0L));
     }
+
+    @Test
+    public void testManhattanDistance() {
+        assertThat(Calculator.manhattanDistance(-7, -4, 17, 6), is(34));
+        assertThat(Calculator.manhattanDistance(17, 6, -7, -4), is(34));
+        assertThat(Calculator.manhattanDistance(0, 0, 3, 3), is(6));
+        assertThat(Calculator.manhattanDistance(3, 3, 0, 0), is(6));
+        assertThat(Calculator.manhattanDistance(3, 3, 3, 3), is(0));
+        assertThat(Calculator.manhattanDistance(1, 1, 9, 9), is(16));
+    }
 }
