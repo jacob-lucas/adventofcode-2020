@@ -14,10 +14,12 @@ import static org.junit.Assert.assertThat;
 
 public class ShipTest {
     private Ship ship;
+    private Waypoint waypoint;
 
     @Before
     public void setUp() {
         ship = new Ship();
+        waypoint = new Waypoint(10, 1);
     }
 
     @Test
@@ -73,5 +75,14 @@ public class ShipTest {
         assertThat(ship.getX(), is(x));
         assertThat(ship.getY(), is(y));
         assertThat(ship.getDirection(), is(SOUTH.ch));
+    }
+
+    @Test
+    public void testMoveForwardWithWaypoint() {
+        ship.move(ImmutableInstruction.of(FORWARD, 10), waypoint);
+        assertThat(ship.getX(), is(100));
+        assertThat(ship.getY(), is(10));
+        assertThat(waypoint.getX(), is(10));
+        assertThat(waypoint.getY(), is(1));
     }
 }
