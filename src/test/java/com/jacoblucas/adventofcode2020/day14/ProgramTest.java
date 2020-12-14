@@ -37,7 +37,7 @@ public class ProgramTest {
         final Program program = new Program();
         program.setBitmask("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X");
         program.write(8, 11);
-        assertThat(program.read(8), is(Optional.of(73)));
+        assertThat(program.read(8), is(Optional.of(73L)));
     }
 
     @Test
@@ -46,7 +46,7 @@ public class ProgramTest {
         program.setBitmask("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X");
         program.write(8, 11);
         program.write(7, 101);
-        assertThat(program.read(7), is(Optional.of(101)));
+        assertThat(program.read(7), is(Optional.of(101L)));
     }
 
     @Test
@@ -56,7 +56,7 @@ public class ProgramTest {
         program.write(8, 11);
         program.write(7, 101);
         program.write(8, 0);
-        assertThat(program.read(8), is(Optional.of(64)));
+        assertThat(program.read(8), is(Optional.of(64L)));
     }
 
     @Test
