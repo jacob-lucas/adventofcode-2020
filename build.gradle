@@ -24,6 +24,7 @@ dependencies {
     compile "io.vavr:vavr:0.9.2"
     compile "org.immutables:value:2.7.4"
     compile "com.google.guava:guava:28.1-jre"
+    compile "org.apache.commons:commons-lang3:3.11"
 
     annotationProcessor "org.immutables:value:2.7.4"
 
