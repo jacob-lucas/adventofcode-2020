@@ -12,8 +12,8 @@ import static org.junit.Assert.assertThat;
 public class ProgramTest {
     @Test
     public void testToBinaryString() {
-        assertThat(Program.toBinaryString(11), is("000000000000000000000000000000001011"));
-        assertThat(Program.toBinaryString(101), is("000000000000000000000000000001100101"));
+        assertThat(Program.toBinaryString(11L), is("000000000000000000000000000000001011"));
+        assertThat(Program.toBinaryString(101L), is("000000000000000000000000000001100101"));
     }
 
     @Test
@@ -73,5 +73,21 @@ public class ProgramTest {
 
         assertThat(program.read(7).get(), is(101L));
         assertThat(program.read(8).get(), is(64L));
+    }
+
+    @Test
+    public void testDecode() {
+        final List<String> input = ImmutableList.of(
+                "mask = 000000000000000000000000000000X1001X",
+                "mem[42] = 100",
+                "mask = 00000000000000000000000000000000X0XX",
+                "mem[26] = 1");
+
+        final Program program = Program.parse(input);
+        program.setVersion(2);
+
+        program.execute();
+
+        assertThat(program.getMemory().values().stream().reduce(0L, Long::sum), is(208L));
     }
 }
