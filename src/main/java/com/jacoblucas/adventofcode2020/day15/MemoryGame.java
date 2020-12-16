@@ -15,7 +15,6 @@ public class MemoryGame {
 
     public MemoryGame(final List<Integer> input) {
         this.input = input;
-        init();
     }
 
     public void init() {
@@ -28,13 +27,13 @@ public class MemoryGame {
     }
 
     public int get(final int n) {
+        init();
         int k = input.size();
         int last = input.get(input.size() - 1);
         while (k < n) {
             last = turn(k + 1, last);
             k++;
         }
-        init();
         return last;
     }
 
@@ -49,8 +48,11 @@ public class MemoryGame {
             spoken = lastTurn - secondLastTurn;
         }
 
-        final List<Integer> existing = memory.getOrDefault(spoken, new ArrayList<>());
+        List<Integer> existing = memory.getOrDefault(spoken, new ArrayList<>());
         existing.add(n);
+        if (existing.size() > 2) {
+            existing = existing.subList(existing.size()-2, existing.size());
+        }
         memory.put(spoken, existing);
         return spoken;
     }
