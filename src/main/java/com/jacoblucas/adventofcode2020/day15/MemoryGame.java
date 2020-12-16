@@ -1,59 +1,33 @@
 package com.jacoblucas.adventofcode2020.day15;
 
-import com.google.common.collect.ImmutableList;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 public class MemoryGame {
     private final List<Integer> input;
 
     // number to recent turns
-    private Map<Integer, List<Integer>> memory;
+    private Map<Integer, Integer> memory;
 
     public MemoryGame(final List<Integer> input) {
         this.input = input;
     }
 
-    public void init() {
+    public int get(final int n) {
         this.memory = new HashMap<>();
 
         // set up the first n turns, where n == input.size()
-        for (int i=1; i<=input.size(); i++) {
-            memory.put(input.get(i-1), new ArrayList<>(ImmutableList.of(i)));
-        }
-    }
+        IntStream.range(0, input.size()).forEach(i -> memory.put(input.get(i), i));
 
-    public int get(final int n) {
-        init();
-        int k = input.size();
-        int last = input.get(input.size() - 1);
-        while (k < n) {
-            last = turn(k + 1, last);
-            k++;
+        final int turn = input.size() - 1;
+        int k = input.get(turn);
+        for (int i=turn; i<n-1; i++) {
+            final Integer last = memory.get(k);
+            memory.put(k, i);
+            k = last == null ? 0 : i - last;
         }
-        return last;
-    }
-
-    int turn(final int n, final int last) {
-        final List<Integer> turns = memory.getOrDefault(last, ImmutableList.of());
-        final int spoken;
-        if (turns.size() < 2) {
-            spoken = 0;
-        } else {
-            final int lastTurn = turns.get(turns.size() - 1);
-            final int secondLastTurn = turns.get(turns.size() - 2);
-            spoken = lastTurn - secondLastTurn;
-        }
-
-        List<Integer> existing = memory.getOrDefault(spoken, new ArrayList<>());
-        existing.add(n);
-        if (existing.size() > 2) {
-            existing = existing.subList(existing.size()-2, existing.size());
-        }
-        memory.put(spoken, existing);
-        return spoken;
+        return k;
     }
 }

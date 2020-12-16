@@ -11,6 +11,6 @@ public class Day15 {
         final MemoryGame game = new MemoryGame(input);
 
         System.out.println(game.get(2020));
-        System.out.println(game.get(30000000)); // Takes about 19 hrs to run :(
+        System.out.println(game.get(30000000));
     }
 }

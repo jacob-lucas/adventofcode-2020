@@ -60,4 +60,46 @@ public class MemoryGameTest {
         final MemoryGame game = new MemoryGame(ImmutableList.of(3,1,2));
         assertThat(game.get(2020), is(1836));
     }
+
+    @Test
+    public void example7() {
+        final MemoryGame game = new MemoryGame(ImmutableList.of(0,3,6));
+        assertThat(game.get(30000000), is(175594));
+    }
+
+    @Test
+    public void example8() {
+        final MemoryGame game = new MemoryGame(ImmutableList.of(1,3,2));
+        assertThat(game.get(30000000), is(2578));
+    }
+
+    @Test
+    public void example9() {
+        final MemoryGame game = new MemoryGame(ImmutableList.of(2,1,3));
+        assertThat(game.get(30000000), is(3544142));
+    }
+
+    @Test
+    public void example10() {
+        final MemoryGame game = new MemoryGame(ImmutableList.of(1,2,3));
+        assertThat(game.get(30000000), is(261214));
+    }
+
+    @Test
+    public void example11() {
+        final MemoryGame game = new MemoryGame(ImmutableList.of(2,3,1));
+        assertThat(game.get(30000000), is(6895259));
+    }
+
+    @Test
+    public void example12() {
+        final MemoryGame game = new MemoryGame(ImmutableList.of(3,2,1));
+        assertThat(game.get(30000000), is(18));
+    }
+
+    @Test
+    public void example13() {
+        final MemoryGame game = new MemoryGame(ImmutableList.of(3,1,2));
+        assertThat(game.get(30000000), is(362));
+    }
 }
