@@ -19,15 +19,16 @@ public abstract class Rule {
                 .anyMatch(r -> input >= r.getFirst() && input <= r.getSecond());
     }
 
-    // name: a-b or c-d
+    // some name: a-b or c-d
     public static Try<Rule> parse(String str) {
         return Try.of(() -> {
-            final String[] parts = str.split(" ");
+            final String[] parts = str.split(":");
+            final String[] ranges = parts[1].trim().split(" ");
             return ImmutableRule.builder()
-                    .field(parts[0].substring(0, parts[0].length() - 1))
+                    .field(parts[0])
                     .validRanges(ImmutableList.of(
-                            parseRange(parts[1]),
-                            parseRange(parts[3])))
+                            parseRange(ranges[0]),
+                            parseRange(ranges[2])))
                     .build();
         });
     }

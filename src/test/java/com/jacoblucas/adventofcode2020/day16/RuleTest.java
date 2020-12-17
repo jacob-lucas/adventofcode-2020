@@ -17,7 +17,18 @@ public class RuleTest {
                 .field("row")
                 .validRanges(ImmutableList.of(
                         ImmutablePair.of(6, 11),
-                        ImmutablePair.of(33,44)))
+                        ImmutablePair.of(33, 44)))
+                .build()));
+    }
+    @Test
+    public void testParseLongField() {
+        final String input = "departure location: 44-401 or 415-965";
+        final Try<Rule> rule = Rule.parse(input);
+        assertThat(rule.get(), is(ImmutableRule.builder()
+                .field("departure location")
+                .validRanges(ImmutableList.of(
+                        ImmutablePair.of(44, 401),
+                        ImmutablePair.of(415, 965)))
                 .build()));
     }
 
