@@ -9,9 +9,15 @@ public class Day18 {
     public static void main(String[] args) throws IOException {
         final List<String> lines = InputReader.read("day18-input.txt");
 
-        final long expressionSum = lines.stream()
-                .map(Expression::new)
-                .mapToLong(Expression::evaluate)
+        final Evaluator inOrderEvaluator = new InOrderEvaluator();
+        long expressionSum = lines.stream()
+                .mapToLong(inOrderEvaluator::evaluate)
+                .sum();
+        System.out.println(expressionSum);
+
+        final Evaluator addFirstEvaluator = new AddFirstEvaluator();
+        expressionSum = lines.stream()
+                .mapToLong(addFirstEvaluator::evaluate)
                 .sum();
         System.out.println(expressionSum);
     }
