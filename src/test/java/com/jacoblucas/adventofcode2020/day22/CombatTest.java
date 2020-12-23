@@ -19,16 +19,29 @@ public class CombatTest {
     public void setUp() {
         one = new Player(1, new LinkedList<>(ImmutableList.of(9,2,6,3,1)));
         two = new Player(2, new LinkedList<>(ImmutableList.of(5,8,4,7,10)));
-        combat = new Combat(one, two);
+        combat = new Combat(one, two, false);
     }
 
     @Test
-    public void testGameOver() {
+    public void testGameOverRegular() {
         while (!one.getDeck().isEmpty()) {
             assertThat(combat.gameOver(), is(false));
             one.getDeck().remove();
         }
         assertThat(combat.gameOver(), is(true));
+        assertThat(combat.getWinner().getId(), is(2));
+    }
+
+    @Test
+    public void testGameOverRecursive() {
+        one = new Player(1, new LinkedList<>(ImmutableList.of(43, 19)));
+        two = new Player(2, new LinkedList<>(ImmutableList.of(2, 29, 14)));
+        combat = new Combat(one, two, true);
+
+        combat.play();
+
+        assertThat(combat.gameOver(), is(true));
+        assertThat(combat.getWinner().getId(), is(1));
     }
 
     @Test
@@ -42,8 +55,17 @@ public class CombatTest {
     }
 
     @Test
-    public void testPlay() {
-        final Player winner = combat.play();
-        assertThat(winner.getId(), is(2));
+    public void testPlayRegular() {
+        combat.play();
+        assertThat(combat.getWinner().getId(), is(2));
+        assertThat(combat.getWinner().score(), is(306L));
+    }
+
+    @Test
+    public void testPlayRecursive() {
+        combat = new Combat(one, two, true);
+        combat.play();
+        assertThat(combat.getWinner().getId(), is(2));
+        assertThat(combat.getWinner().score(), is(291L));
     }
 }
